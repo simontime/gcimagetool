@@ -5,7 +5,7 @@ size_t compress(uint8_t *in, uint8_t *in_end, uint8_t *out)
     uint8_t  ch, *out_start;
     uint16_t rl;
 
-	out_start = out;
+    out_start = out;
 
     while (in < in_end)
     {
@@ -57,38 +57,38 @@ size_t compress(uint8_t *in, uint8_t *in_end, uint8_t *out)
 
 size_t decompress(uint8_t *in, uint8_t *in_end, uint8_t *out)
 {
-	uint8_t  ch, *out_start;
-	uint16_t rl;
+    uint8_t  ch, *out_start;
+    uint16_t rl;
 
-	out_start = out;
+    out_start = out;
 
-	while (in < in_end)
-	{
-		ch = *in++;
+    while (in < in_end)
+    {
+        ch = *in++;
 
-		if (ch < 0xc0) // Literal (in range)
-		{
-			*out++ = ch;
-		}
-		else if (ch == 0xc0) // RLE (16-bit)
-		{
-			rl = (in[1] << 8) | in[0];
-			ch = in[2];
-			in += 3;
+        if (ch < 0xc0) // Literal (in range)
+        {
+            *out++ = ch;
+        }
+        else if (ch == 0xc0) // RLE (16-bit)
+        {
+            rl = (in[1] << 8) | in[0];
+            ch = in[2];
+            in += 3;
 
-			while (rl--)
-				*out++ = ch;
-		}
-		else // RLE (6-bit)
-		{
-			rl = ch & ~0xc0;
-			ch = *in++;
+            while (rl--)
+                *out++ = ch;
+        }
+        else // RLE (6-bit)
+        {
+            rl = ch & ~0xc0;
+            ch = *in++;
 
-			while (rl--)
-				*out++ = ch;
-		}
-	}
+            while (rl--)
+                *out++ = ch;
+        }
+    }
 
-	// Decompressed length
-	return out - out_start;
+    // Decompressed length
+    return out - out_start;
 }
