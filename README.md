@@ -15,4 +15,4 @@ Input image must be <=256x256 if uncompressed, or <=200x160 if compressed.
 ### Decoding:
 `gcimagetool decode input.bin output.png width height [-c]`
 #### Optional arguments:
-`-c`: compress
+`-c`: decompress
